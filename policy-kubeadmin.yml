@@ -1,0 +1,54 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: kubeadmin-removal
+  namespace: open-cluster-management
+  annotations:
+    policy.open-cluster-management.io/categories: security
+    policy.open-cluster-management.io/standards: MYSTANDARD
+spec:
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: kubeadmin-removal
+        spec:
+          pruneObjectBehavior: None
+          object-templates:
+            - complianceType: mustnothave
+              objectDefinition:
+                apiVersion: v1
+                kind: Secret
+                metadata:
+                  name: kubeadmin
+                  namespace: kube-system
+                type: Opaque
+          remediationAction: enforce
+          severity: low
+
+---
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: dev-clusters-placement
+  namespace: open-cluster-management
+spec:
+  clusterSets:
+    - dev-clusters
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: kubeadmin-policy
+  namespace: open-cluster-management
+placementRef:
+  name: dev-clusters-placement
+  apiGroup: cluster.open-cluster-management.io
+  kind: Placement
+subjects:
+  - name: kubeadmin-removal
+    apiGroup: policy.open-cluster-management.io
+    kind: Policy
+

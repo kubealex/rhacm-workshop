@@ -4,8 +4,9 @@ metadata:
   name: kubeadmin-removal
   namespace: open-cluster-management
   annotations:
-    policy.open-cluster-management.io/categories: security
-    policy.open-cluster-management.io/standards: MYSTANDARD
+    policy.open-cluster-management.io/categories: AC Access Control
+    policy.open-cluster-management.io/standards: NIST SP 800-53
+    policy.open-cluster-management.io/controls: AC-3 Access Enforcement
 spec:
   disabled: false
   policy-templates:
@@ -51,4 +52,3 @@ subjects:
   - name: kubeadmin-removal
     apiGroup: policy.open-cluster-management.io
     kind: Policy
-

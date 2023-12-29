@@ -33,7 +33,7 @@ spec:
             port: 8080
           periodSeconds: 2
           initialDelaySeconds: 2
-        image: quay.io/kubealex/random-meme:latest
+        image: quay.io/kubealex/sample-app:latest
         volumeMounts:
           - name: images-volume
             mountPath: /var/images/

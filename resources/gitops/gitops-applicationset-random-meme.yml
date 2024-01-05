@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: random-meme
+  namespace: openshift-gitops
+spec:
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            argocd.argoproj.io/secret-type: cluster
+  template:
+    metadata:
+      name: "{{nameNormalized}}-random-meme"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/kubealex/rhacm-workshop/
+        targetRevision: HEAD
+        path: "applications/random-meme"
+        kustomize:
+          commonAnnotations:
+            managed-cluster: "{{nameNormalized}}"
+      destination:
+        server: "{{server}}"
+        namespace: test
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        automated:
+          selfHeal: true
+          prune: true

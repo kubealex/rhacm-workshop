@@ -7,3 +7,22 @@ metadata:
 spec:
   clusterSets:
     - dev-clusters
+---
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: remote-clusters-placement
+  namespace: openshift-gitops
+spec:
+  clusterSets:
+    - remote-clusterset
+---
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: gitops-clusters-placement
+  namespace: openshift-gitops
+spec:
+  clusterSets:
+    - remote-clusterset
+    - dev-clusters

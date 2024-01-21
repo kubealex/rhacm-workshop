@@ -1,3 +1,5 @@
 # rhacm-workshop
 
-End to end ws to provision an application on multiple clusters.
+Repository for RHACM use cases:
+    - Policies
+    - Applications
